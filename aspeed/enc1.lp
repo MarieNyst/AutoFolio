@@ -1,14 +1,18 @@
 #script(python)
-
+import clingo
 #import gringo
 
 ts = {}
-def insert(i,s,t):
-  key = str(s)
-  if not ts.get(key):
+def insert(i, s, t):
+  i_val = str(i)  # Always treat i as a string
+  s_val = str(s)   # Solver name as string
+  t_val = t.number # Time as number
+
+  key = s_val
+  if key not in ts:
     ts[key] = []
-  ts[key].append([i,t])
-  return 1
+  ts[key].append([i_val, t_val])
+  return clingo.Number(1)  # Return a clingo symbol
 
 def order(s):
   key = str(s)
@@ -21,7 +25,16 @@ def order(s):
     if p:
       r.append((p,i))
     p = i
-  return r
+
+  # Convert the result to clingo symbols
+  result = []
+  for pair in r:
+    pair_symbols = [
+            clingo.String(pair[0]),
+            clingo.String(pair[1])
+        ]
+    result.append(clingo.Function("", pair_symbols))
+  return result
 
 #end.
 

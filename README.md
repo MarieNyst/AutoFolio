@@ -33,6 +33,7 @@ You should have received a copy of the 2-clause BSD license along with this prog
 NOTE: AutoFolio requires the future SMAC 0.9; currently only available in the [development branch of SMAC](https://github.com/automl/SMAC3/tree/development)
 
 AutoFolio runs with '''Python 3.5'''.
+This repository version has been partly tested with '''Python 3.9'''
 
 To install (nearly) all requirements, please run:
 

@@ -11,3 +11,4 @@ smac>=2.0.0
 liac-arff
 tabpfn
 ensemble-tabpfn
+clingo
