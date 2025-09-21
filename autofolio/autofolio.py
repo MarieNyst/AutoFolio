@@ -119,7 +119,8 @@ class AutoFolio(object):
             config = {}
             if args_.config is not None:
                 self.logger.info("Reading yaml config file")
-                config = yaml.load(open(args_.config))
+                with open(args_.config, 'r') as file:
+                    config = yaml.safe_load(file)
             if not config.get("wallclock_limit"):
                 config["wallclock_limit"] = args_.wallclock_limit
             if not config.get("runcount_limit"):
@@ -472,8 +473,8 @@ class AutoFolio(object):
                 best incumbent configuration found by SMAC
         '''
 
-        wallclock_limit = autofolio_config.get("wallclock_limit", wallclock_limit)
-        runcount_limit = autofolio_config.get("runcount_limit", runcount_limit)
+        wallclock_limit_ = autofolio_config.get("wallclock_limit", wallclock_limit)
+        runcount_limit_ = autofolio_config.get("runcount_limit", runcount_limit)
 
         taf = functools.partial(self.called_by_smac, scenario=scenario)
         taf.__code__ = self.called_by_smac.__code__
@@ -482,8 +483,8 @@ class AutoFolio(object):
 
         ac_scenario = Scenario(configspace=self.cs,
                                deterministic=True,
-                               walltime_limit=wallclock_limit,
-                               n_trials=runcount_limit,
+                               walltime_limit=wallclock_limit_,
+                               n_trials=runcount_limit_,
                                trial_memory_limit=None,
                                trial_walltime_limit=None,
                                seed=seed,
